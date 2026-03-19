@@ -1,30 +1,31 @@
-// LinkedList.h
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#include "LinkedList.h"
 
-#include <memory>
-#include <iostream>
-#include "Room.h"  // This includes the definition of the Room class
-using namespace std;
+Node::Node(Room room) : room(room), next(nullptr) {}
 
-class Node {
-public:
-    Room room;
-    shared_ptr<Node> next;
+LinkedList::LinkedList() : head(nullptr) {}
 
-    Node(Room room);
-};
+void LinkedList::addRoom(const Room& room) {
+    auto newNode = make_shared<Node>(room);
 
-class LinkedList {
-private:
-    shared_ptr<Node> head;
+    if (!head) {
+        head = newNode;
+    } else {
+        auto current = head;
+        while (current->next) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+}
 
-public:
-    LinkedList();
-    void addRoom(const Room& room);
-    void displayRooms();
-    shared_ptr<Node> getHead() const;  // Add this line to provide access to the head of the list
+void LinkedList::displayRooms() {
+    auto current = head;
+    while (current) {
+        cout << current->room.toString() << endl;
+        current = current->next;
+    }
+}
 
-};
-
-#endif
+shared_ptr<Node> LinkedList::getHead() const {
+    return head;
+}
