@@ -1,25 +1,20 @@
-#include "Enemy.h"
+#ifndef ENEMY_H
+#define ENEMY_H
 
-Enemy::Enemy(string name, int health) {
-    this->name = name;
-    this->health = health;
-}
+#include <string>
+using namespace std;
 
-string Enemy::getName() const {
-    return name;
-}
+class Enemy {
+private:
+    string name;
+    int health;
 
-int Enemy::getHealth() const {
-    return health;
-}
+public:
+    Enemy(string name, int health);
+    string getName() const;
+    int getHealth() const;
+    void takeDamage(int damage);
+    bool isDefeated() const;
+};
 
-void Enemy::takeDamage(int damage) {
-    health -= damage;
-    if (health < 0) {
-        health = 0;
-    }
-}
-
-bool Enemy::isDefeated() const {
-    return health == 0;
-}
+#endif
